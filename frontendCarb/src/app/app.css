@@ -1,0 +1,222 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 100dvh;
+  background: #f4f6f8;
+}
+
+.sidebar {
+  background: linear-gradient(180deg, #ffffff 0%, #f9fbfd 100%);
+  border-right: 1px solid #e0e6ed;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar h1 {
+  margin: 0;
+  font-size: 21px;
+}
+
+.subtitle {
+  margin: 0;
+  color: #5f6b7a;
+  font-size: 14px;
+}
+
+.search-input {
+  border: 1px solid #ced6e0;
+  border-radius: 8px;
+  padding: 10px 12px;
+  font-size: 14px;
+  outline: none;
+}
+
+.search-input:focus {
+  border-color: #2f80ed;
+  box-shadow: 0 0 0 3px rgba(47, 128, 237, 0.18);
+}
+
+.filters-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 0 4px;
+  border-top: 1px solid #e2e8f0;
+  margin-top: 4px;
+}
+
+.filter-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #64748b;
+}
+
+.filter-input {
+  margin-bottom: 4px;
+}
+
+.stations-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: auto;
+}
+
+.station-item {
+  border: 1px solid #d9e2ec;
+  border-radius: 8px;
+  background: #fff;
+  text-align: left;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 4px;
+  transition: all 0.15s ease-in-out;
+}
+
+.station-item:hover {
+  border-color: #8ab4f8;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(47, 128, 237, 0.12);
+}
+
+.station-item.active {
+  border-color: #0f62fe;
+  background: #edf4ff;
+}
+
+.station-item span {
+  color: #5f6b7a;
+  font-size: 13px;
+}
+
+.map-panel {
+  position: relative;
+}
+
+#stations-map {
+  width: 100%;
+  height: 100dvh;
+}
+
+:host ::ng-deep .fuel-station-marker {
+  background: transparent;
+  border: none;
+}
+
+:host ::ng-deep .fuel-station-marker__pin {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #1d4ed8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+
+:host ::ng-deep .fuel-station-marker__pin svg {
+  width: 14px;
+  height: 14px;
+  fill: #ffffff;
+}
+
+:host ::ng-deep .station-cluster-icon {
+  background: transparent;
+  border: none;
+}
+
+:host ::ng-deep .station-cluster-icon div {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #334155;
+  color: #ffffff;
+  border: 2px solid #f8fafc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+}
+
+.details-card {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 320px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  padding: 14px;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+  border: 1px solid #e2e8f0;
+}
+
+.details-card h2,
+.details-card h3 {
+  margin: 0 0 10px;
+}
+
+.details-card p {
+  margin: 0 0 8px;
+  font-size: 14px;
+}
+
+.details-card ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.info {
+  color: #334e68;
+  font-size: 14px;
+  margin: 0;
+}
+
+.error {
+  color: #b42318;
+  font-size: 14px;
+}
+
+.empty {
+  margin: 0;
+  font-size: 14px;
+  color: #5f6b7a;
+  font-style: italic;
+}
+
+@media (max-width: 980px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid #e0e6ed;
+    max-height: 300px;
+  }
+
+  #stations-map {
+    height: calc(100dvh - 300px);
+  }
+
+  .details-card {
+    width: calc(100% - 32px);
+    left: 16px;
+    right: 16px;
+  }
+}

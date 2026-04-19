@@ -4,7 +4,6 @@ services:
   # CSV + init.sql restent sur l’hôte (lecture seule pour /data). L’appli se connecte en app_readonly.
   db:
     image: postgres:15
-    container_name: postgres_db
     restart: always
 
     environment:
@@ -33,7 +32,6 @@ services:
 
   backend:
     build: ./backendCarb
-    container_name: backend_api
     restart: always
 
     ports:
@@ -52,7 +50,6 @@ services:
 
   frontend:
     build: ./frontendCarb
-    container_name: frontend_app
     restart: always
 
     ports:
