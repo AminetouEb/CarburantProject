@@ -1,0 +1,17 @@
+# Node
+frontendCarb/node_modules/
+frontendCarb/dist/
+
+# Python
+__pycache__/
+*.pyc
+
+# Env
+.env
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
