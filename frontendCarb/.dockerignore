@@ -1,0 +1,25 @@
+# VCS / editor
+.git
+.gitignore
+.cursor
+.vscode
+
+# Dependencies / build cache
+node_modules/
+dist/
+.angular/
+coverage/
+tmp/
+out-tsc/
+
+# Local env / logs
+*.log
+.env
+.env.*
+!.env.example
+
+# CI / misc
+.DS_Store
+Thumbs.db
+npm-debug.log*
+yarn-error.log*

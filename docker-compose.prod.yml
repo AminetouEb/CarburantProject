@@ -1,9 +1,10 @@
 services:
 
-  # Données Postgres dans un tmpfs (RAM) : réinitialisées à chaque recréation du conteneur.
-  # CSV + init.sql restent sur l’hôte (lecture seule pour /data). L’appli se connecte en app_readonly.
+  # Deploiement hybride (VM): backend/frontend tires depuis un registry.
+  # Sur la VM, seuls ce fichier + database/ sont necessaires.
   db:
     image: postgres:15
+    container_name: postgres_db
     restart: always
 
     environment:
@@ -14,6 +15,7 @@ services:
     ports:
       - "5432:5432"
 
+    # Donnees en RAM: base reconstruite a chaque recreation du conteneur.
     tmpfs:
       - /var/lib/postgresql/data:size=1g
 
@@ -31,7 +33,8 @@ services:
       start_period: 120s
 
   backend:
-    build: ./backendCarb
+    image: aminetou01/backendcarb:1.0
+    container_name: backend_api
     restart: always
 
     ports:
@@ -45,17 +48,10 @@ services:
       DB_PORT: 5432
 
   frontend:
-    build: ./frontendCarb
+    image: aminetou01/frontendcarb:1.0
+    container_name: frontend_app
     restart: always
 
     ports:
-      - "4200:4200"
+      - "4200:80"
 
-    command: ["npx", "ng", "serve", "--host", "0.0.0.0", "--port", "4200", "--poll", "2000"]
-
-    # Code source depuis l’hôte : plus besoin de rebuild à chaque edit (node_modules restent dans l’image).
-    volumes:
-      - ./frontendCarb/src:/app/src
-      - ./frontendCarb/angular.json:/app/angular.json
-      - ./frontendCarb/tsconfig.json:/app/tsconfig.json
-      - ./frontendCarb/tsconfig.app.json:/app/tsconfig.app.json

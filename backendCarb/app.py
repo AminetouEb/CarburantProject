@@ -7,6 +7,7 @@ app = Flask(__name__)
 CORS(app)
 
 def get_conn():
+    """Cree une connexion PostgreSQL a partir des variables d'environnement."""
     return psycopg2.connect(
         host=os.getenv("DB_HOST"),
         database=os.getenv("DB_NAME"),
@@ -17,6 +18,7 @@ def get_conn():
 
 @app.route("/test")
 def test():
+    """Endpoint de sante logique: retourne le nombre de stations en base."""
     conn = get_conn()
     cur = conn.cursor()
     cur.execute("SELECT COUNT(*) FROM fuel_stations;")
@@ -27,10 +29,16 @@ def test():
 
 @app.route("/stations")
 def stations():
+    """
+    Retourne les stations (coordonnees + prix + dates).
+    Parametre optionnel:
+      - q: recherche par ville ou identifiant partiel.
+    """
     query = request.args.get("q", "").strip()
     conn = get_conn()
     cur = conn.cursor()
     try:
+        # Selection volontairement limitee aux colonnes utiles au frontend.
         base_sql = """
             SELECT
                 id, latitude, longitude, adresse, ville,
@@ -42,6 +50,7 @@ def stations():
         """
         params = []
         if query:
+            # Parametrage SQL pour eviter les injections.
             base_sql += " AND (LOWER(ville) LIKE LOWER(%s) OR CAST(id AS TEXT) LIKE %s)"
             like_query = f"%{query}%"
             params = [like_query, like_query]
@@ -54,6 +63,7 @@ def stations():
 
     stations_list = []
     for row in rows:
+        # Mapping tuple SQL -> structure JSON attendue par l'UI.
         station = {
             "id": row[0],
             "latitude": row[1],

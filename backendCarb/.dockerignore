@@ -1,0 +1,28 @@
+# VCS / editor
+.git
+.gitignore
+.cursor
+.vscode
+
+# Python cache / virtualenv
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+env/
+
+# Runtime / local files
+*.log
+*.sqlite3
+.env
+.env.*
+!.env.example
+
+# Tests and docs not needed at runtime
+tests/
+docs/

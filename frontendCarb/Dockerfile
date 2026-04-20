@@ -2,13 +2,17 @@ FROM node:22
 
 WORKDIR /app
 
+# Copier uniquement les dépendances
 COPY package*.json ./
+
+# Installer dépendances (cache Docker)
 RUN npm install --legacy-peer-deps
 
+# Copier le reste du projet
 COPY . .
 
-RUN npm install -g @angular/cli
+# Build Angular
+RUN npm run build
 
-EXPOSE 4200
-
-CMD ["npx", "ng", "serve", "--host", "0.0.0.0", "--port", "4200"]
+# Lancer app
+CMD ["npm", "start"]
